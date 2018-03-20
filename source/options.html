@@ -1,0 +1,25 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>EBN</title>
+<link rel="stylesheet" href="options.css">
+<link rel="stylesheet" href="chrome://global/skin/in-content/common.css">
+<link rel="stylesheet" href="chrome://mozapps/skin/extensions/extensions.css">
+<form id="options-form" class="detail-view-container">
+	<h2>Login details</h2>
+	<section>
+		<span class="title">Email:</span>
+		<input type="email" name="email">
+	</section>
+	<section>
+		<span class="title">API Key:</span>
+		<input type="password" name="password">
+	</section>
+	<p>
+		<label>
+			<input type="checkbox" name="logging">
+			Enable logging
+		</label>
+	</p>
+</form>
+<script src="browser-polyfill.min.js"></script>
+<script src="options.js"></script>

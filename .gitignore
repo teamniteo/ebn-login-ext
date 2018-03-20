@@ -1,0 +1,7 @@
+node_modules
+yarn.lock
+distribution
+.env
+*.pem
+*.xpi
+*.crx
