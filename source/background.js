@@ -1,50 +1,43 @@
-
 function getBlogs() {
 	return fetch('https://app.easyblognetworks.com/api/v1/blogs/', {
 		method: 'GET',
 		credentials: 'include'
-	}).then(response => response.json())
+	}).then(response => response.json());
 }
 
-function getLogin(blog_id) {
-	return fetch(`https://app.easyblognetworks.com/api/v1/blogs/${blog_id}/`, {
+function getLogin(blogId) {
+	return fetch(`https://app.easyblognetworks.com/api/v1/blogs/${blogId}/`, {
 		method: 'GET',
 		credentials: 'include'
-	}).then(response => response.json())
+	}).then(response => response.json());
 }
 
-async function cache(fn, name, arg) {
-	let cached = sessionStorage[name];
-	if (!cached) {
-		cached = await fn(arg);
-		sessionStorage[name] = JSON.stringify(cached);
-	} else {
-		cached = JSON.parse(cached);
-	}
-	return cached;
-}
-
-async function parse(request, port) {
-	if (!request.domain){
-		port.postMessage({ error: "missing domain in request" });
-		return
+export default async function handleRequest(request, port) {
+	if (!request.domain) {
+		port.postMessage({error: 'Missing domain in request.'});
+		return;
 	}
 
-	const blogs = await cache(getBlogs, 'blogs');
+	let blog;
+	const blogs = await getBlogs();
 
-	for (const blog of blogs) {
-		if (blog.domain == request.domain) {
-			port.postMessage({ ok: "found login" });
-			const login = await cache(getLogin, `blog-${blog.id}`, blog.id);
-			port.postMessage({ user: login.wp_admin_username, pass: login.wp_admin_password});
-			return
+	for (const rBlog of blogs) {
+		if (rBlog.domain === request.domain) {
+			blog = rBlog;
+			break;
 		}
 	}
-	port.postMessage({ warning: "no login found" });
+
+	if (blog) {
+		const login = await getLogin(blog.id);
+		port.postMessage({user: login.wp_admin_username, pass: login.wp_admin_password});
+	} else {
+		port.postMessage({error: 'Not managed by EBN.'});
+	}
 }
 
-chrome.runtime.onConnect.addListener(function (port) {
-	port.onMessage.addListener(async function (msg) {
-		await parse(msg, port);
+chrome.runtime.onConnect.addListener(port => { /* istanbul ignore next line */
+	port.onMessage.addListener(async msg => { /* istanbul ignore next line */
+		await handleRequest(msg, port);
 	});
 });
