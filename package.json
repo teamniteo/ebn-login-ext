@@ -8,8 +8,9 @@
 		"build": "webpack --mode=production",
 		"watch": "webpack --mode=development --watch",
 		"release:fx": "web-ext sign -s distribution -a ./",
-		"release:ch": "crx pack distribution -p key.pem -o scrum_github.crx",
-		"release:cws": "rm -f ext.zip; cd distribution; zip -r ../ext.zip .; webstore upload --source ext.zip --auto-publish",
+		"release:ch": "crx pack distribution -p key.pem -o ebn-login.crx",
+		"release:zip": "rm -f distribution/*.map;rm -f ebn-login.zip;cd distribution; zip -r ../ebn-login.zip .;",
+		"release:cws": "npm run release:zip && webstore upload --source ebn-login.zip --auto-publish",
 		"release": "run-s build update-version save-url release:*",
 		"save-url": "echo https://github.com/$TRAVIS_REPO_SLUG/tree/$TRAVIS_COMMIT > distribution/SOURCE_URL",
 		"update-version": "VERSION=$(utc-version); echo $VERSION; dot-json distribution/manifest.json version $VERSION",
@@ -26,18 +27,18 @@
 		"p-event": "^1.3.0",
 		"select-dom": "^4.1.0",
 		"to-semver": "^1.1.0",
-		"turndown": "^4.0.1",
+		"turndown": "^4.0.2",
 		"webext-domain-permission-toggle": "0.0.2",
 		"webext-dynamic-content-scripts": "^5.0.0-2",
 		"webext-options-sync": "^0.15.0",
 		"webextension-polyfill": "^0.2.1"
 	},
 	"devDependencies": {
-		"babel-core": "^6.26.0",
+		"babel-core": "^6.26.3",
 		"babel-jest": "^22.4.3",
 		"babel-loader": "^7.1.2",
 		"babel-plugin-dynamic-import-node": "^1.2.0",
-		"babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+		"babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
 		"babel-plugin-transform-react-jsx": "^6.24.1",
 		"chrome-webstore-upload-cli": "^1.1.1",
 		"common-tags": "^1.7.2",
@@ -49,15 +50,15 @@
 		"jest-environment-jsdom-global": "^1.0.3",
 		"jest-fetch-mock": "^1.5.0",
 		"jest-localstorage-mock": "^2.2.0",
-		"jsdom": "^11.7.0",
+		"jsdom": "^11.10.0",
 		"npm-run-all": "^4.1.1",
 		"stylelint": "^9.1.1",
-		"stylelint-config-xo": "*",
-		"uglifyjs-webpack-plugin": "^1.2.1",
+		"stylelint-config-xo": "^0.8.0",
+		"uglifyjs-webpack-plugin": "^1.2.5",
 		"utc-version": "^1.1.0",
 		"webext": "^1.9.1-with-submit.1",
-		"webpack": "^4.0.0",
-		"webpack-cli": "^2.0.6",
+		"webpack": "^4.6.0",
+		"webpack-cli": "^2.1.2",
 		"xo": "*"
 	},
 	"xo": {
@@ -95,7 +96,7 @@
 			"./__setups__/fixture.js",
 			"./__setups__/fetch.js"
 		],
-		  "collectCoverageFrom": [
+		"collectCoverageFrom": [
 			"source/**/*.js",
 			"!<rootDir>/node_modules/",
 			"!<rootDir>__setups__"
