@@ -2,28 +2,60 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const {VueLoaderPlugin} = require('vue-loader');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = () => ({
 	devtool: 'sourcemap',
 	entry: {
 		content: './source/content',
 		background: './source/background',
-		options: './source/options'
+		options: './source/options',
+		popup: './source/popup'
 	},
 	output: {
 		path: path.join(__dirname, 'distribution'),
 		filename: '[name].js'
 	},
+	resolve: {
+		extensions: ['.js', '.vue', '.json'],
+		alias: {
+			vue$: 'vue/dist/vue.esm.js',
+			'@': './source/'
+		}
+	},
 	module: {
 		rules: [
+			{
+				test: /\.(js|vue)$/,
+				loader: 'eslint-loader',
+				enforce: 'pre',
+				include: [path.join(__dirname, '..', 'src'), path.join(__dirname, '..', 'test')],
+				options: {
+					formatter: require('eslint-friendly-formatter')
+				}
+			},
+			{
+				test: /\.vue$/,
+				loader: 'vue-loader'
+			},
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
 				loader: 'babel-loader'
-			}
+			},
+			{
+				test: /\.css$/,
+				use: [
+					'vue-style-loader',
+					'css-loader'
+				]}
 		]
 	},
 	plugins: [
+		new CleanWebpackPlugin(['distribution/*.*']),
+		new VueLoaderPlugin(),
 		new CopyWebpackPlugin([
 			{
 				from: '*',
@@ -38,6 +70,7 @@ module.exports = () => ({
 	optimization: {
 		// Without this, function names will be garbled and enableFeature won't work
 		concatenateModules: true,
+		splitChunks: {name: 'lib.js'},
 
 		// Automatically enabled on prod; keeps it somewhat readable for AMO reviewers
 		minimizer: [

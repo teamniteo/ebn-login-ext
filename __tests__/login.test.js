@@ -1,6 +1,6 @@
 /* eslint camelcase: ["error", {properties: "never"}] */
 
-import {default as injectLogin} from '../source/content';
+import {default as injectLogin} from '../source/login';
 
 describe('content script', () => {
 	afterEach(() => {

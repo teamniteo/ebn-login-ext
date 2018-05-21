@@ -1,14 +1,14 @@
 {
-	"name": "EBN Log-in",
-	"version": "0.0.0",
-	"description": "Quickly login to your EBN WordPress account.",
+	"name": "EBN Blog Login",
+	"version": "0.0.1",
+	"description": "Login to your blogs without visiting the EBN app.",
 	"homepage_url": "https://app.easyblognetworks.com",
 	"manifest_version": 2,
 	"minimum_chrome_version": "58",
 	"applications": {
 		"gecko": {
-			"id": "{8cc5e7c1-d7cb-4a27-9c4e-d014cbdbdc3f}",
-			"strict_min_version": "55.0"
+			"strict_min_version": "55.0",
+			"id": "{1efdcd74-5e54-4caa-9658-5d6a68a1c81d}"
 		}
 	},
 	"permissions": [
@@ -24,11 +24,16 @@
 		"https://*/*"
 	],
 	"icons": {
+		"16": "16.png",
+		"48": "32.png",
 		"128": "icon.png"
 	},
-	"options_ui": {
-		"chrome_style": true,
-		"page": "options.html"
+	"browser_action": {
+		"default_icon": {
+			"16": "16.png",
+			"32": "32.png"
+		},
+		"default_popup": "popup.html"
 	},
 	"background": {
 		"scripts": [

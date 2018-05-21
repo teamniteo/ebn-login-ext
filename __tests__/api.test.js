@@ -1,6 +1,6 @@
 /* eslint camelcase: ["error", {properties: "never"}] */
 
-import {default as handleRequest} from '../source/background';
+import {default as handleRequest} from '../source/api';
 
 function port(mockery) {
 	return {

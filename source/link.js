@@ -6,6 +6,7 @@ export default async function injectLink() {
 	if (document.location.href !== 'https://app.easyblognetworks.com/settings/') {
 		return;
 	}
+	const link = select('div#item-deformField5');
 	const autoLink = function (e) {
 		const email = select('input[name=email]').getAttribute('value');
 		const apikey = select('p#deformField5').textContent.trim();
@@ -13,12 +14,15 @@ export default async function injectLink() {
 			email,
 			apikey
 		});
+		link.append(
+			<p><br />Your EBN account is now linked with the extension.</p>
+		);
 		e.preventDefault();
 		return false;
 	};
 	select('div#item-deformField5').append(
 		<button type="button" onClick={autoLink} class="link-now btn btn-success">
-			Link with EBN Login extension
+			Link with EBN Blog Login extension
 		</button>
 	);
 }
