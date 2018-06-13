@@ -12,7 +12,8 @@ module.exports = () => ({
 		content: './source/content',
 		background: './source/background',
 		options: './source/options',
-		popup: './source/popup'
+		popup: './source/popup',
+		track: './source/track'
 	},
 	output: {
 		path: path.join(__dirname, 'distribution'),
@@ -21,7 +22,6 @@ module.exports = () => ({
 	resolve: {
 		extensions: ['.js', '.vue', '.json'],
 		alias: {
-			vue$: 'vue/dist/vue.esm.js',
 			'@': './source/'
 		}
 	},
