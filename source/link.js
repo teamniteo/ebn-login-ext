@@ -5,7 +5,7 @@ import select from 'select-dom';
 import OptionsSync from 'webext-options-sync';
 
 export default async function injectLink() {
-	if (document.location.href !== 'https://app.easyblognetworks.com/settings/') {
+	if (document.location.href !== 'https://app.easyblognetworks.com/settings-account/') {
 		return;
 	}
 

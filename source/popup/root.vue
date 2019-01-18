@@ -34,7 +34,7 @@
 						<p class="text-muted" style="padding-top: 1rem;">Please visit the app to link this extension to your account.</p>
 					</div>
 					<div class="col-12">
-						<a href="https://app.easyblognetworks.com/settings/" target="_blank" class="btn btn-success col-12">Log In</a>
+						<a href="https://app.easyblognetworks.com/settings-account/" target="_blank" class="btn btn-success col-12">Log In</a>
 					</div>
 				</div>
 			</div>
