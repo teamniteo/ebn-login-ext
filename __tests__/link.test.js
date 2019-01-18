@@ -1,6 +1,8 @@
 /* eslint camelcase: ["error", {properties: "never"}] */
 
-import {default as injectLink} from '../source/link';
+import {
+	default as injectLink
+} from '../source/link';
 
 describe('content script', () => {
 	afterEach(() => {
@@ -21,7 +23,7 @@ describe('content script', () => {
 		await injectLink();
 
 		const button = document.querySelector('button.link-now').textContent;
-		expect(button).toEqual('Link with EBN Login extension');
+		expect(button).toEqual('Link with EBN Blog Login extension');
 	});
 
 	it('should have click handler', async () => {
@@ -34,6 +36,6 @@ describe('content script', () => {
 		await injectLink();
 
 		const button = document.querySelector('button.link-now').textContent;
-		expect(button).toEqual('Link with EBN Login extension');
+		expect(button).toEqual('Link with EBN Blog Login extension');
 	});
 });

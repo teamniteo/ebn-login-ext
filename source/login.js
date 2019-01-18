@@ -27,6 +27,7 @@ export default async function injectLogin() {
 		});
 		return false;
 	};
+
 	port.onMessage.addListener(msg => {
 		if (msg.blogs) {
 			const host = document.location.hostname.replace('www.', '');

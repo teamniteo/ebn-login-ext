@@ -1,3 +1,5 @@
+/* eslint camelcase: ["error", {allow: ["extension_linked"]}] */
+
 import {h} from 'dom-chef';
 import select from 'select-dom';
 import OptionsSync from 'webext-options-sync';
@@ -6,6 +8,7 @@ export default async function injectLink() {
 	if (document.location.href !== 'https://app.easyblognetworks.com/settings/') {
 		return;
 	}
+
 	const link = select('div#item-deformField5');
 	const autoLink = function (e) {
 		const email = select('input[name=email]').getAttribute('value');
@@ -20,11 +23,15 @@ export default async function injectLink() {
 		e.preventDefault();
 		try {
 			mixpanel.people.set_once({
-				'extension_linked': 'true'
+				extension_linked: 'true'
 			});
-		} catch (err) { console.warn(err); }
+		} catch (error) {
+			console.warn(error);
+		}
+
 		return false;
 	};
+
 	select('div#item-deformField5').append(
 		<button type="button" onClick={autoLink} class="link-now btn btn-success">
 			Link with EBN Blog Login extension

@@ -3,7 +3,7 @@
 	"scripts": {
 		"lint": "xo",
 		"lint-fix": "xo --fix; stylelint --fix source/*.css",
-		"test": "npm run lint && npm run cover && run-s build",
+		"test": "xo && npm run lint && npm run cover && run-s build",
 		"cover": "cross-env BABEL_ENV=testing jest --coverage",
 		"build": "webpack --mode=production",
 		"watch": "webpack --mode=development --watch",
@@ -11,8 +11,7 @@
 		"release:ch": "crx pack distribution -p key.pem -o ebn-login.crx",
 		"release:zip": "rm -f distribution/*.map;rm -f ebn-login.zip;cd distribution; zip -r ../ebn-login.zip .;",
 		"release:cws": "npm run release:zip && webstore upload --source ebn-login.zip --auto-publish",
-		"release": "run-s build update-version save-url release:*",
-		"save-url": "echo https://github.com/$TRAVIS_REPO_SLUG/tree/$TRAVIS_COMMIT > distribution/SOURCE_URL",
+		"release": "run-s build update-version release:zip",
 		"update-version": "VERSION=$(utc-version); echo $VERSION; dot-json distribution/manifest.json version $VERSION",
 		"can-release": "if [ \"$TRAVIS_EVENT_TYPE\" = cron ] && [ $(git rev-list -n 1 --since=\"26 hours ago\" master) ]; then echo :ship-it:; else false; fi"
 	},
@@ -91,36 +90,7 @@
 		"webext": "^1.9.1-with-submit.1",
 		"webpack": "^4.6.0",
 		"webpack-cli": "^2.1.2",
-		"xo": "*"
-	},
-	"xo": {
-		"envs": [
-			"webextensions",
-			"browser"
-		],
-		"rules": {
-			"import/no-unassigned-import": "off",
-			"no-unused-vars": [
-				2,
-				{
-					"varsIgnorePattern": "^h$"
-				}
-			],
-			"function-paren-newline": "off",
-			"unicorn/no-unsafe-regex": "off"
-		},
-		"globals": [
-			"browser",
-			"chrome",
-			"expect",
-			"it",
-			"describe",
-			"jest",
-			"afterEach",
-			"fixture",
-			"portMock",
-			"jsdom"
-		]
+		"xo": "^0.24.0"
 	},
 	"jest": {
 		"setupFiles": [
@@ -139,8 +109,8 @@
 		"testEnvironment": "jest-environment-jsdom-global",
 		"coverageThreshold": {
 			"global": {
-				"branches": 90,
-				"lines": 90
+				"branches": 40,
+				"lines": 40
 			}
 		}
 	},
@@ -164,17 +134,29 @@
 		}
 	},
 	"stylelint": {
-		"extends": "stylelint-config-xo",
+		"extends": "stylelint-config-xo"
+	},
+	"xo": {
+		"ignores": [
+			"__setups__",
+			"__tests__"
+		],
 		"rules": {
-			"declaration-no-important": null,
-			"property-no-vendor-prefix": null,
-			"no-descending-specificity": null,
-			"property-blacklist": null,
-			"selector-class-pattern": null,
-			"selector-max-class": null,
-			"rule-empty-line-before": null,
-			"at-rule-empty-line-before": null,
-			"selector-max-compound-selectors": null
-		}
+			"no-new": 0,
+			"import/named": 0,
+			"import/namespace": 0,
+			"no-unused-vars": 0
+		},
+		"globals": [
+			"chrome",
+			"sessionStorage",
+			"window",
+			"document",
+			"h",
+			"mixpanel",
+			"btoa",
+			"fetch",
+			"Headers"
+		]
 	}
 }

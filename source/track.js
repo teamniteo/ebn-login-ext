@@ -3,9 +3,11 @@ function afterMixpanelLoaded() {
 	try {
 		console.log('login ext people.set_once');
 		mixpanel.people.set_once({
-			'extension': 'true'
+			extension: 'true'
 		});
-	} catch (err) { console.warn(err); }
+	} catch (error) {
+		console.warn(error);
+	}
 }
 
 function afterMixpanel() {

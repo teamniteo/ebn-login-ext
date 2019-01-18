@@ -22,3 +22,4 @@ global.chrome.storage = {
 		set: jest.fn()
 	}
 };
+global.sessionStorage = {};

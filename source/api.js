@@ -22,6 +22,7 @@ async function getBlogs(page = 1, blogs = []) {
 		if (response.status !== 200) {
 			throw response;
 		}
+
 		response.json().then(data => {
 			blogs = blogs.concat(data.blogs);
 
@@ -63,6 +64,7 @@ export default async function handleRequest(request, port) {
 		chrome.tabs.create({url: login.wp_auto_login});
 		return;
 	}
+
 	if (request.list) {
 		let blogs = [];
 		if (sessionStorage.blogs) {
@@ -71,6 +73,7 @@ export default async function handleRequest(request, port) {
 			blogs = await getBlogs();
 			sessionStorage.blogs = JSON.stringify(blogs);
 		}
+
 		port.postMessage({blogs});
 		return;
 	}
