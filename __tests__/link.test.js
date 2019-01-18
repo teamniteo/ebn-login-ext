@@ -16,9 +16,9 @@ describe('content script', () => {
 	it('should inject itself on account pages', async () => {
 		fixture.load('__tests__/fixtures/link.html');
 		jsdom.reconfigure({
-			url: 'https://app.easyblognetworks.com/settings/'
+			url: 'https://app.easyblognetworks.com/settings-account/'
 		});
-		expect(window.location.pathname).toEqual('/settings/');
+		expect(window.location.pathname).toEqual('/settings-account/');
 
 		await injectLink();
 
@@ -29,9 +29,9 @@ describe('content script', () => {
 	it('should have click handler', async () => {
 		fixture.load('__tests__/fixtures/link.html');
 		jsdom.reconfigure({
-			url: 'https://app.easyblognetworks.com/settings/'
+			url: 'https://app.easyblognetworks.com/settings-account/'
 		});
-		expect(window.location.pathname).toEqual('/settings/');
+		expect(window.location.pathname).toEqual('/settings-account/');
 
 		await injectLink();
 
