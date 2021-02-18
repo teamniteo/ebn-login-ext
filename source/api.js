@@ -1,8 +1,15 @@
 import OptionsSync from 'webext-options-sync';
 
 async function getAuth() {
+	let key;
 	const options = await new OptionsSync().getAll();
-	const key = btoa(`${options.email}:${options.apikey}`);
+
+	if("collaboratorApiEmail" in options && "collaboratorApiKey" in options) {
+		key = btoa(`${options.collaboratorApiEmail}:${options.collaboratorApiKey}`);
+	} else {
+		key = btoa(`${options.email}:${options.apikey}`);
+	}
+
 	return new Headers({
 		Authorization: `Basic ${key}`
 	});
