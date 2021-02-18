@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
 			<div v-if="linked" style="padding-bottom: .7rem;">
-				<br/>
+				<p class="remove-access"><a href="#" v-on:click="removeAccess()">Sign Out</a></p>
 				<form>
 					<div class="form-group">
 						<input type="search" class="form-control" v-model="search" placeholder="Search for blog">
@@ -25,6 +25,24 @@
 					</li>
 				</ul>
 			</div>
+			<div v-else-if="collaboratorScreen" style="padding-top: 1rem;">
+				<form ref="collaboratorForm">
+					<div class="form-group">
+						<label for="collaboratorApiEmail">Email Address</label>
+						<input type="text" class="form-control" id="collaboratorApiEmail" v-model="collaboratorApiEmail" placeholder="Email Address">
+					</div>
+
+					<div class="form-group">
+						<label for="collaboratorApiKey">Collaborator API Key</label>
+						<input type="text" class="form-control" id="collaboratorApiKey" v-model="collaboratorApiKey" placeholder="Collaborator API Key">
+					</div>
+
+					<div class="form-group action-buttons">
+						<a href="#" v-on:click="collaboratorLogin()" class="btn btn-info col-7">Add API Key</a>
+						<a href="#" v-on:click="hideCollaboratorScreen()" class="btn btn-light col-4">Go back</a>
+					</div>
+				</form>
+			</div>
 			<div v-else>
 				<div class="row" style="padding-bottom: .7rem;">
 					<div class="col-3">
@@ -35,6 +53,12 @@
 					</div>
 					<div class="col-12">
 						<a href="https://app.easyblognetworks.com/settings-account/" target="_blank" class="btn btn-success col-12">Log In</a>
+					</div>
+					<div class="col-12">
+						<hr>
+					</div>
+					<div class="col-12">
+						<a href="#" v-on:click="showCollaboratorScreen()" class="btn btn-info col-12">Add Collaborator API Key</a>
 					</div>
 				</div>
 			</div>
@@ -49,9 +73,12 @@ const port = chrome.runtime.connect({name: "popup"});
 export default {
   data: () => ({
 		search: '',
-		domains:[],
-		active:null,
-		linked:false
+		domains: [],
+		active: null,
+		linked: false,
+		collaboratorScreen: false,
+		collaboratorApiEmail: '',
+		collaboratorApiKey: ''
 	}),
   computed: {
     external() {
@@ -100,7 +127,30 @@ export default {
     loginClick(id) {
 			port.postMessage({loginInline: id});
 			this.active = id;
-    }
+    },
+		showCollaboratorScreen() {
+			this.collaboratorScreen = true;
+		},
+		hideCollaboratorScreen() {
+			this.collaboratorScreen = false;
+		},
+		collaboratorLogin() {
+			const collaboratorApiEmail = this.collaboratorApiEmail;
+			const collaboratorApiKey = this.collaboratorApiKey;
+
+			if(collaboratorApiKey && collaboratorApiEmail) {
+				new OptionsSync().setAll({
+					collaboratorApiKey,
+					collaboratorApiEmail
+				});
+				this.collaboratorScreen = false;
+				this.linked = true;
+			}
+		},
+		removeAccess() {
+			new OptionsSync().setAll({});
+			this.linked = false;
+		}
   },
   components: {
     FontAwesomeIcon
@@ -112,18 +162,30 @@ export default {
 body {
   width: 340px;
 }
-.list-group-item{
+.list-group-item {
 	padding: 0.25rem 0.5rem;
 	border: none;
 }
-.scol-2{
+.scol-2 {
 	font-size: 1.1rem;
 	visibility: hidden;
 }
-.row:hover .scol-2{
+.row:hover .scol-2 {
 	visibility: visible;
 }
-.logo{
-	    max-width: 5rem;
+.logo {
+	max-width: 5rem;
+}
+.action-buttons {
+	display: flex;
+}
+.action-buttons .btn-light {
+	margin-left: auto;
+}
+.remove-access {
+	padding: 0.500rem 0;
+	text-align: right;
+	font-size: 0.750rem;
+	margin: 0;
 }
 </style>
