@@ -149,6 +149,7 @@ export default {
 		},
 		removeAccess() {
 			new OptionsSync().setAll({});
+			this.domains = [];
 			this.linked = false;
 		}
   },
