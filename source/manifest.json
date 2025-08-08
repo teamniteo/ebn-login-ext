@@ -47,7 +47,5 @@
 			]
 		}
 	],
-	"web_accessible_resources": [
-		"track.js"
-	]
+	"web_accessible_resources": []
 }
