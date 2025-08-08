@@ -21,14 +21,6 @@ export default async function injectLink() {
 			<p><br />Your EBN account is now linked with the extension.</p>
 		);
 		e.preventDefault();
-		try {
-			mixpanel.people.set_once({
-				extension_linked: 'true'
-			});
-		} catch (error) {
-			console.warn(error);
-		}
-
 		return false;
 	};
 
