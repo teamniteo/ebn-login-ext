@@ -11,8 +11,7 @@ module.exports = () => ({
 		content: './source/content',
 		background: './source/background',
 		options: './source/options',
-		popup: './source/popup',
-		track: './source/track'
+		popup: './source/popup'
 	},
 	output: {
 		path: path.join(__dirname, 'distribution'),
