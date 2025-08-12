@@ -4,7 +4,7 @@ async function getAuth() {
 	let key;
 	const options = await new OptionsSync().getAll();
 
-	if("collaboratorApiEmail" in options && "collaboratorApiKey" in options) {
+	if ('collaboratorApiEmail' in options && 'collaboratorApiKey' in options) {
 		key = btoa(`${options.collaboratorApiEmail}:${options.collaboratorApiKey}`);
 	} else {
 		key = btoa(`${options.email}:${options.apikey}`);

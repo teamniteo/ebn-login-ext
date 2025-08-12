@@ -145,7 +145,10 @@
 			"no-new": 0,
 			"import/named": 0,
 			"import/namespace": 0,
-			"no-unused-vars": 0
+			"no-unused-vars": 0,
+			"node/prefer-global/buffer": 0,
+			"node/prefer-global/console": 0,
+			"node/prefer-global/process": 0
 		},
 		"globals": [
 			"chrome",
