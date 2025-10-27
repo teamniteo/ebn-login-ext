@@ -3,8 +3,8 @@
 	"version": "0.0.1",
 	"description": "Login to your blogs without visiting the EBN app.",
 	"homepage_url": "https://app.easyblognetworks.com",
-	"manifest_version": 2,
-	"minimum_chrome_version": "58",
+	"manifest_version": 3,
+	"minimum_chrome_version": "100",
 	"permissions": [
 		"storage",
 		"contextMenus",

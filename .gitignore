@@ -9,3 +9,4 @@ coverage
 *.crx
 *.zip
 .DS_Store
+.yarn
